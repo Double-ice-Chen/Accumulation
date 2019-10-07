@@ -1,0 +1,24 @@
+childNodes  //子节点（包含了文本节点+元素节点）
+obj.childNodes.length
+
+nodeType //节点类型
+
+obj.nodeType
+//nodeType == 3 //文本节点；
+//nodeType == 2 //属性节点；
+//nodeType == 1 //元素节点；
+
+ 用if单独设置元素节点 
+ 例如：
+if（obj.childNodes[i].nodeType==1)
+{
+    obj.childNodes[i].style.background='red'
+    }
+    
+    
+children //只包含元素节点； （较好）
+
+子节点只算第一层，不往里算
+
+
+parentNode //父节点；
