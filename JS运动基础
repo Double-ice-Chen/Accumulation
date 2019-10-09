@@ -1,0 +1,52 @@
+相对定位是“相对于”元素在文档中的初始位置，而绝对定位是“相对于”最近的已定位祖先元素，如果不存在已定位的祖先元素，那么“相对于”最初的包含块。
+原则：
+1：在开始运动前，关闭已有定时器
+2：用if 和 else 把停止定时器和运动隔开
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>匀速运动</title>
+    <style>
+    #div1{
+        width: 200px;
+        height: 200px;
+        background: red;
+        position: absolute;
+        /* 一定要加绝对定位 不然跑不起来 */
+        top: 50px;
+        left: 0px;
+    }
+    </style>
+    <script>
+    var timer=null;
+    function startMove()
+     {
+        var oDiv=document.getElementById('div1');
+        clearInterval(timer);  //先把以前开的定时器关了 再重新开一个 能保证只有一个定时器在工作
+        timer=setInterval(function(){    //把定时器放在变量timer里
+            var speed=1;
+            if(oDiv.offsetLeft>=300)
+            {
+                clearInterval(timer); //到达终点后执行
+            }
+            else
+            {
+                oDiv.style.left=oDiv.offsetLeft+speed+'px';  //到达终点前执行
+            }
+            
+            //offsetLeft的作用是取div的位置  
+            //上面的意思是 把div当前的位置加上10px再赋值给他自己
+            //要使div运动的慢点 不改30那个值（会不流畅） 改speed变量值 每次移动少点
+        },30);  
+     }
+    </script>
+</head>
+<body>
+<input id="btn1" type="button" value="开始运动"  onclick="startMove()"/>
+<div id="div1"></div>
+</body>
+</html>
