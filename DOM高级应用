@@ -1,0 +1,487 @@
+表格应用 （以表格为例说明问题 可以应用于其他地方）
+
+1、获取表格中某单元格的内容：
+(A)普通方法 ：
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>表格的应用-1</title>
+<script>
+window.onload=function(){
+	var oTab=document.getElementById('tab1');
+	//获取第二列第二行（ID=2)内容：即“张三”
+	alert(oTab.getElementsByTagName('tbody')[0].getElementsByTagName('tr')[1].getElementsByTagName('td')[1].innerHTML);    
+};
+</script>
+
+简便操作
+通过：tBodies[i] 代替 getElementsTagName(tbody)[i]  //作用也是将表格内容中的 tbody 标签选出来使用
+rows[i] 代替getElementsByTagName('tr')[i]  // 作用是获取表格行的内容（0-第1行，1-第2行....）
+cells[i] 代替 getElementsByTagName('td')[i]  // 作用是选择行里的第几个单元格（0-第1个格，1-第2个格....）
+即alert(oTab.tBodies[0].rows[1].cells[1].innerHTML); 
+
+
+
+<body>
+<table id="tab1" border="1" width="500px">
+    <thead>     <!--表头 -->
+        <td>ID</td>  
+        <td>姓名</td>
+        <td>年龄</td>
+    </thead>
+    <tbody>     <!--// 定义表格的内容 -->
+        <tr>
+        <td>1</td>
+            <td>Blue</td>
+            <td>27</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>张三</td>
+            <td>23</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>李四</td>
+            <td>28</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>王五</td>
+            <td>25</td>
+        </tr>
+        <tr>
+         <td>5</td>
+            <td>张伟</td>
+            <td>24</td>
+        </tr>
+    </tbody> 
+</ cript>
+window.onload=function(){
+	var oTab=document.getElementById('tab1');
+	// 让表格隔行变色
+	for(var i=0;i=oTab.tBodies[0].rows.length;i++){ 
+	   if(i%2){
+	       oTab.tBodies[0].rows[i].style.background='';
+	   }
+	   else {
+	       oTab.tBodies[0].rows[i].style.background='#CCC';
+	   }
+     }
+};
+</script>
+</head>
+
+
+应用2——鼠标移入高亮
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script>
+window.onload=function(){
+	var oTab=document.getElementById('tab1');
+	var oldColor='';	//用一个变量把原来背景颜色存起来 ，避免把原有颜色清除
+	for(var i=1;i=oTab.tBodies[0].rows.length;i++){
+		oTab.tBodies[0].rows[i].onmouseover=function(){
+			oldColor=this.style.background;  // 保存原有的底色，当鼠标离开时就还原原有的底色
+			this.style.background='green';	
+		};
+		oTab.tBodies[0].rows[i].onmouseout=function(){
+			this.style.background=oldColor;	 //移除还是为原来颜色
+		};
+	   if(i%2){
+	       oTab.tBodies[0].rows[i].style.background='';
+	   }
+	   else {
+	       oTab.tBodies[0].rows[i].style.background='#CCC';
+	   }
+	}  
+};
+</script>
+
+
+3、表格添加与删除
+// 添加的方法：
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>表格应用——添加与删除</title>
+<script>
+window.onload=function(){
+	var oTab=document.getElementById('tab1');
+	var oBtn=document.getElementById('btn1');
+	var oName=document.getElementById('name');
+	var oAge=document.getElementById('age');
+	
+	oBtn.onclick=function(){
+		var oTr=document.createElement('tr');  // 创建一个tr标签元素节点
+		// 添加第一列
+		var oTd=document.createElement('td');  // 创建一个td标签元素节点		
+		oTd.innerHTML=oTab.tBodies[0].rows.length+1;  //将要放置新节点的位置创建出来
+		oTr.appendChild(oTd);   // 把新节点增加到指定位置
+    // 添加第二列
+		var oTd=document.createElement('td');  // 创建一个td标签元素节点
+		oTd.innerHTML=oName.value;  //将要放置新节点的位置创建出来
+		oTr.appendChild(oTd);   // 把新节点增加到指定位置
+		// 添加第三列
+		var oTd=document.createElement('td');  // 创建一个td标签元素节点
+		oTd.innerHTML=oAge.value;  //将要放置新节点的位置创建出来
+		oTr.appendChild(oTd);   // 把新节点增加到指定位置
+    oTab.tBodies[0].appendChild(oTr);  // 最后还要把整个要添加的tr添加到表格中去
+	};
+};
+</script>
+</head>
+
+<body>
+姓名：<input id="name" type="text" />
+年龄：<input id="age" type="text" />
+<input id="btn1" type="button" value="添加" />
+
+<table id="tab1" border="1" width="500px">
+    <thead>     <!--// 定义表格的列名 -->
+        <td>ID</td>
+        <td>姓名</td>
+        <td>年龄</td>
+    </thead>
+    <tbody>     <!--// 定义表格的内容 tbody标签可省略不写 -->
+        <tr>
+            <td>1</</script>
+</head>
+
+<body>
+姓名：<input id="name" type="text" />
+年龄：<input id="age" type="text" />
+<input id="btn1" type="button" value="添加" />
+
+<table id="tab1" border="1" width="500px">
+    <thead>     <!--// 定义表格的列名 -->
+        <td>ID</td>
+        <td>姓名</td>
+        <td>年龄</td>
+    </thead>
+    <tbody>     <!--// 定义表格的内容 tbody标签可省略不写 -->
+        <tr>
+            <td>1</</script>
+</head>
+
+<body>
+姓名：<input id="name" type="text" />
+年龄：<input id="age" type="text" />
+<input id="btn1" type="button" value="添加" />
+
+<table id="tab1" border="1" width="500px">
+    <thead>     <!--// 定义表格的列名 -->
+        <td>ID</td>
+        <td>姓名</td>
+        <td>年龄</td>
+    </thead>
+    <tbody>     <!--// 定义表格的内容 tbody标签可省略不写 -->
+        <tr>
+            <td>1</td>
+            <td>Blue</td>
+            <td>27</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>张三</td>
+            <td>23</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>李四</td>
+            <td>28</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>王五</td>
+            <td>25</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>张伟</td>
+            <td>24</td>
+        </tr>
+    </tbody> 
+</table>
+</body>
+</html>
+
+
+// 删除的方法：
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>表格应用——添加与删除</title>
+<script>
+window.onload=function(){
+	var oTab=document.getElementById('tab1');
+	var oBtn=document.getElementById('btn1');
+	var oName=document.getElementById('name');
+	var oAge=document.getElementById('age');
+  //后续加变量ID的地方
+	
+	oBtn.onclick=function(){
+		var oTr=document.createElement('tr');  // 创建一个tr标签元素节点
+		// 添加第一列
+		var oTd=document.createElement('td');  // 创建一个td标签元素节点		
+		oTd.innerHTML=oTab.tBodies[0].rows.length+1;  //将要放置新节点的位置创建出来   //后续赋值ID的地方
+		oTr.appendChild(oTd);   // 把新节点增加到指定位置
+		// 添加第二列
+		var oTd=document.createElement('td');  // 创建一个td标签元素节点
+		oTd.innerHTML=oName.value;  //将要放置新节点的位置创建出来
+		oTr.appendChild(oTd);   // 把新节点增加到指定位置
+		// 添加第三列
+		var oTd=document.createElement('td');  // 创建一个td标签元素节点
+		oTd.innerHTML=oAge.value;  //将要放置新节点的位置创建出来
+		oTr.appendChild(oTd);   // 把新节点增加到指定位置
+		// 添加第四列
+		var oTd=document.createElement('td');  // 创建一个td标签元素节点
+		oTd.innerHTML='<a href="javascript:;">删除</a>';  //将要放置新节点的位置创建出来
+		oTr.appendChild(oTd);   // 把新节点增加到指定位置
+		
+		oTd.getElementsByTagName('a')[0].onclick=function(){
+			oTab.tBodies[0].removeChild(this.parentNode.parentNode);  // this表示当前的a标签，其父级的父级就是tr标签，也就是要删除的东西
+		};
+		
+		oTab.tBodies[0].appendChild(oTr);  // 最后还要把整个要添加的tr添加到表格中去
+	};
+};
+</script>
+</head>
+
+<body>
+姓名：<input id="name" type="text" />
+年龄：<input id="age" type="text" />
+<input id="btn1" type="button" value="添加" />
+
+<table id="tab1" border="1" width="500px">
+    <thead>     <!--// 定义表格的列名 -->
+        <td>ID</td>
+        <td>姓名</td>
+        <td>年龄</td>
+        <td>操作</td>
+    </thead>
+    <tbody>     <!--// 定义表格的内容 tbody标签可省略不写 -->
+        <tr>
+            <td>1</td>
+            <td>Blue</td>
+            <td>27</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>张三</td>
+            <td>23</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>李四</td>
+            <td>28</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>王五</td>
+            <td>25</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>张伟</td>
+            <td>24</td>
+            <td></td>
+        </tr>
+    </tbody> 
+</table>
+</body>
+</html>
+
+// 让删除的ID值不重复出现的方法：
+<script>
+var Id=oTab.tBodies[0].rows.length+1 //用变量将其存起来
+
+oTd.innerHTML=Id++;//将值赋给它并比原来大一个
+
+
+
+
+从表格中搜索符合条件内容
+1、简单搜索制作：
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>表格应用—搜索</title>
+<script>
+window.onload=function(){
+	var oTab=document.getElementById('tab1');
+	var oTxt=document.getElementById('name');
+	var oBtn=document.getElementById('btn1');
+	
+	oBtn.onclick=function(){
+		for(var i=0;i<oTab.tBodies[0].rows.length;i++){
+			if(oTab.tBodies[0].rows[i].cells[1].innerHTML==oTxt.value){
+				oTab.tBodies[0].rows[i].style.background='red';  //表示找到要查的内容，并显示底色为红色				
+			}
+			else {
+				oTab.tBodies[0].rows[i].style.background='';  // 若不是被找的内容底色显示无色
+			}
+      }
+	};
+};
+</script>
+</head>
+
+
+完善搜索的功能（忽略大小写）：
+通过：toLowerCase()函数将内容全部转成小写作对比：
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>表格应用—搜索</title>
+<script>
+window.onload=function(){
+	var oTab=document.getElementById('tab1');
+	var oTxt=document.getElementById('name');
+	var oBtn=document.getElementById('btn1');
+	
+	oBtn.onclick=function(){
+		for(var i=0;i<oTab.tBodies[0].rows.length;i++){
+			var sTab=oTab.tBodies[0].rows[i].cells[1].innerHTML  // 从表格单元格中取出来的值 定义变量 
+			var sTxt=oTxt.value   // 文本框里的要查的值
+			if(sTab.toLowerCase()==sTxt.toLowerCase()){   // 将单元格中内容及要查找的内容（字符串）全部转换成小写进行对比（这样实现不区分大小写查找）
+				oTab.tBodies[0].rows[i].style.background='red';  //表示找到要查的内容，并显示底色为红色				
+			}
+			else {
+				oTab.tBodies[0].rows[i].style.background='';  // 若不是被找的内容底色显示无色
+			}
+	    }
+	};
+};
+</script>
+</head>
+
+
+
+
+
+
+3、模糊搜索的方法 ：
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>表格应用—模糊搜索</title>
+<script>
+window.onload=function(){
+	var oTab=document.getElementById('tab1');
+	var oTxt=document.getElementById('name');
+	var oBtn=document.getElementById('btn1');
+	
+	oBtn.onclick=function(){
+		for(var i=0;i<oTab.tBodies[0].rows.length;i++){
+			var sTab=oTab.tBodies[0].rows[i].cells[1].innerHTML.toLowerCase()  // 表格单元格中的内容
+			var sTxt=oTxt.value.toLowerCase()   // 要查的内容
+			if(sTab.search(sTxt)!=-1){   // search(要找的字符串)该函数表示把要找的字符串在原字符集的位置，若找不到返回-1  不等于-1即找到了
+				oTab.tBodies[0].rows[i].style.background='red';  //表示找到要查的内容，并显示底色为红色				
+			}
+			else {
+				oTab.tBodies[0].rows[i].style.background='';  // 若不是被找的内容底色显示无色
+			}
+	    }
+	};
+};
+</script>
+</head>
+
+
+
+4、多关键字搜索：
+split(字符串） // 表示把一个字符串按split()函数里指定的字符串方式拆分开多个字符串
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>表格应用—多关键字搜索</title>
+<script>
+window.onload=function(){
+	var oTab=document.getElementById('tab1');
+	var oTxt=document.getElementById('name');
+	var oBtn=document.getElementById('btn1');
+	oBtn.onclick=function(){
+		for(var i=0;i<oTab.tBodies[0].rows.length;i++){
+			var sTab=oTab.tBodies[0].rows[i].cells[1].innerHTML.toLowerCase()  // 表格单元格中的内容
+			var sTxt=oTxt.value.toLowerCase()   // 要查的内容
+			var arr=sTxt.split(' ');  // 假设用户输入要搜索的多个关键字是用‘ ’空格键隔开的
+			oTab.tBodies[0].rows[i].style.background='';  // 先把所有弄成空的  此处改为oTab.tBodies[0].rows[i].style.display='none'; 意为筛选
+			for(var i=0;j<arr.length;j++){     //循环数组 这个数组是由关键字切割来的
+				if(sTab.search(arr[j])!=-1){   // search(要找的字符串)该函数表示把要找的字符串在原字符集的位置，若找不到返回-1
+        oTab.tBodies[0].rows[i].style.background='red';  //表示找到要查的内容，并显示底色为红色	
+        此处改为oTab.tBodies[0].rows[i].style.display='block';意为筛选
+				}
+			}			
+			
+	    }
+	};
+};
+</script>
+</head>
+
+
+5.表格排序
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>排序</title>
+	<script>
+		window.onload=function (){
+			var oUl=document.getElementById('ul1');
+			var oBtn=document.getElementById('btn1');
+			//console.log("halou");
+			oBtn.onclick=function(){
+				var aLi=oUl.getElementsByTagName('li');
+				var arr=[];
+				for (var i = 0; i < aLi.length; i++) {
+					arr[i]=aLi[i];
+				}
+				arr.sort(function(li1,li2){
+					var n1=parseInt(li1.innerHTML);
+					var n2=parseInt(li2.innerHTML);
+					return n1-n2;
+				});
+				for (var i = 0; i < arr.length; i++) {
+					//console.log(arr[i].innerHTML);
+					oUl.appendChild(arr[i]);
+				}
+
+			}
+
+		}
+	</script>
+</head>
+<body>
+<input id="btn1" type="button" value="排序">
+ <ul id="ul1">
+ 	<li>3</li>
+ 	<li>6</li>
+ 	<li>1</li>
+ 	<li>2</li>
+ 	<li>4</li>
+ 	<li>8</li>
+  <li>7</li>
+ 	<li>9</li>
+ 	<li>10</li>
+ 	<li>5</li>
+ </ul>
+</body>
+</html>
