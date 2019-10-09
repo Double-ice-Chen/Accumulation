@@ -1,6 +1,6 @@
 创建DOM元素
 createElement（标签名）     // 创建一个节点
-appendChild（节点）            // 追加一个节点
+appendChild（节点）            // 追加一个节点  //1.先把元素从原有的父级上删除 2.添加到新的父级上
 注：此方法会将元素插到末尾
 <script>
 window.onload=function(){
