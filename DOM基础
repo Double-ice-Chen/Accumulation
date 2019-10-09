@@ -1,0 +1,102 @@
+childNodes  //子节点（包含了文本节点+元素节点）
+obj.childNodes.length
+
+nodeType //节点类型
+
+obj.nodeType
+//nodeType == 3 //文本节点；
+//nodeType == 2 //属性节点；
+//nodeType == 1 //元素节点；
+
+ 用if单独设置元素节点 
+ 例如：
+if（obj.childNodes[i].nodeType==1)
+{
+    obj.childNodes[i].style.background='red'
+    }
+    
+    
+children //只包含元素节点； （较好）
+
+子节点只算第一层，不往里算
+
+
+parentNode //父节点；
+
+offsetParent //最近的一个有position 定位父元素；
+obj.offsetParent
+
+firstChild //元素集合中的首节点；
+obj.firstChild
+
+lastChild //元素集合中的最后一个节点；
+obj.lastChild
+
+//ie6-8
+obj.firstChild == "元素节点"
+/高版本浏览器方案
+obj.firstChild =="元素节点+文本节点"
+如获取第一个元素节点需使用：
+obj.firstElementChild
+
+用if处理兼容性问题
+例如
+if（obj.fristElementChild）
+{
+   obj.fristElementChild.style.background='red';
+}
+else
+{
+   obj.fristChild.style.background='red';
+}
+
+nextSibling //当前元素的下一个兄弟节点；
+previousSibling //当前元素的上一个兄弟节点；
+
+
+注：lastChild 及以下 nextSibling、previousSibling；兼容解决方案同firstChild方案同理；
+
+oLastChild = obj.lastElementChild || obj.lastChild;
+oNextSibling = obj.nextElementSibling || obj.nextSibling;
+oPreviousSibling = obj.previousElementSibling || obj.previousSibling;
+
+
+元素属性操作：
+第一种：
+obj.style.xxx = 'xx';
+第二种：
+obj.style['xxx']='xx';
+第三种：
+DOM方式
+obj.setAttribute('value','xxx');//设置
+obj.getAttribute('value');// 获取
+obj.removeAttribute('value');删除
+
+
+
+用className 选择元素
+
+封装一个getElementByClassName 函数
+
+function getByClass(oParent,sClass){
+    var aResult = [];
+    var aEle = oParent.getElementsByTagName('*');  //获取
+    for(var i=0;i<aEle.length;i++){
+        if(aEle[i].className == sClass){          //筛选
+            aResult.push(aEle[i]);               //丢进数组
+        }
+    }
+    return aResult;                             //把数组返回出去
+}
+
+push() 方法可向数组的末尾添加一个或多个元素，并返回新的长度。
+
+例如
+var aBox=getByClass(oUl,'box');
+
+for(var i=0; i<aBox.length; i++)
+{
+   aBox[i].style.background='red';
+
+
+
