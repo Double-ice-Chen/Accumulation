@@ -1,0 +1,114 @@
+创建DOM元素
+createElement（标签名）     // 创建一个节点
+appendChild（节点）            // 追加一个节点
+注：此方法会将元素插到末尾
+<script>
+window.onload=function(){
+var oBtn=document.getElementById('btn1');
+var oUl=document.getElementById('ul1');
+oBtn.onclick=function()
+{
+     var oLi=document.createElement('li');    // 表示创建 一个li元素
+     oUl.appendChild(oLi);    
+     //父级.appendChild(子节点);
+     // 把上边创建的子节点放到指定父节点下，这里的父节点是ul（即oUl）
+};
+</script>
+
+<body>
+<input id="btn1" type="button" value="创建li" />
+<ul id="ul1">
+</ul>
+</body>
+
+示例2：从自定义的文本框中输入的文本变成所插入的li标签内容
+<script>
+window.onload=function()
+{
+var oBtn=document.getElementById('btn1');
+var oUl=document.getElementById('ul1');
+var oTxt=document.getElementById('txt1');
+
+oBtn.onclick=function(){
+     var oLi=document.createElement('li');    // 表示创建 一个li元素  此li（oLi)是原先不存在的
+     oLi.innerHTML=oTxt.value;   // 把text的value赋给oLi
+    //父级.appendChild(子节点);
+    oUl.appendChild(oLi);        // 把上边创建的子节点放到指定父节点下，父节点是ul（即oUl）
+    };
+};
+</script>
+
+<body>
+<input id="txt1" type="text" />
+<input id="btn1" type="button" value="创建li" />
+<ul id="ul1">
+</ul>
+</body>
+
+
+2、插入节点（insertBefore）
+父级.appendChild(子节点);  // 插入到父标签的最后面
+父级.insertBefore(子节点,在谁之前插入);   // 插入到指定节点标签之前的位置 可插到任意位置
+
+示例：
+<script>
+window.onload=function()
+{
+var oBtn=document.getElementById('btn1');
+var oUl=document.getElementById('ul1');
+var oTxt=document.getElementById('txt1');
+
+oBtn.onclick=function()
+   {
+     var oLi=document.createElement('li');    // 表示创建 一个li元素
+     var aLi=oUl.getElementsByTagName('li');  //把ul1里所有的li选出来
+     oLi.innerHTML=oTxt.value;   // 表示在新创建li元素中插入HTML代码，即txt1的.value值HTML代码
+    oUl.insertBefore(oLi,aLi[0]);  //在原先的第一个li前插入新li
+    }；
+}；
+</script>
+<body>
+<input id="txt1" type="text" />
+<input id="btn1" type="button" value="创建li" />
+<ul id="ul1">
+</ul>
+</body>
+
+具有兼容性问题  以下为解决方法
+if (aLi.length>0){     //这里判断li一开始是否存在，若不存在的话将在IE浏览器上报错
+       oUl.insertBefore(oLi,aLi[0]);   //这里表示li存在时，将在它第一个元素前增加一个新节点
+    }
+    else {
+        oUl.appendChild(oLi);     // 这里表示li元素一开始是不存在的，先给它创建出来
+    }
+    
+    
+    
+3、删除节点（removeChild）
+父级.removeChild(子节点);   // 从指定的父节点下删除一个子节点
+
+示例：
+<script>
+window.onload=function(){
+var aA=document.getElementsTagName('a');
+var oUl=document.getElementById('ul1');
+
+for (var i=0;i<aA.length;i++){
+   aA[i].onclick=function(){
+       oUl.removeChild(this.parentNode);   //this指的是a ，要remove的是a的父级li
+    }
+}
+};
+</script>
+
+<body>
+<ul id="ul1">
+    <li>第1项内容<a href="javascript:;">删除</a></li>
+    <li>第2项内容<a href="javascript:;">删除</a></li>
+    <li>第3项内容<a href="javascript:;">删除</a></li>
+    <li>第4项内容<a href="javascript:;">删除</a></li>
+</ul>
+</body>
+
+
+
