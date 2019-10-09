@@ -447,20 +447,21 @@ window.onload=function(){
 		window.onload=function (){
 			var oUl=document.getElementById('ul1');
 			var oBtn=document.getElementById('btn1');
-			//console.log("halou");
 			oBtn.onclick=function(){
 				var aLi=oUl.getElementsByTagName('li');
-				var arr=[];
+				var arr=[];       //aLi不是数组 无法调用数组里sort排序方法 所以创建一个数组
 				for (var i = 0; i < aLi.length; i++) {
-					arr[i]=aLi[i];
+					arr[i]=aLi[i];  //把aLi里的值填到数组里  
 				}
-				arr.sort(function(li1,li2){
-					var n1=parseInt(li1.innerHTML);
+				arr.sort(function(li1,li2)//比较函数 存的是什么就比较什么
+				{
+					var n1=parseInt(li1.innerHTML); //parseInt()函数可解析一个字符串,并返回一个整数
 					var n2=parseInt(li2.innerHTML);
 					return n1-n2;
 				});
+				 // 到此，排序的仅仅是数组，li实际位置没变  此时arr已经排好序了， 下面为按照arr的顺序把arr里所有的li重新插入ul
 				for (var i = 0; i < arr.length; i++) {
-					//console.log(arr[i].innerHTML);
+					
 					oUl.appendChild(arr[i]);
 				}
 
@@ -478,10 +479,75 @@ window.onload=function(){
  	<li>2</li>
  	<li>4</li>
  	<li>8</li>
-  <li>7</li>
+        <li>7</li>
  	<li>9</li>
  	<li>10</li>
  	<li>5</li>
  </ul>
+</body>
+</html>
+
+
+
+表格排序
+<script>
+window.onload=function(){
+	var oTab=document.getElementById('tab1');
+	var oBtn=document.getElementById('btn1');
+	
+	oBtn.onclick=function=()
+	{
+		var arr=[];
+		for(var i=0;i<oTab.tBodies[0].rows.length;i++)
+		{
+			arr[i]=oTab.tBodies[0].rows[i];  //此数组存有所有的tr
+		}
+		arr.sort(function(tr1,tr2){
+			var n1=parseInt(tr1.cells[0].innerHTML);
+			var n2=parseInt(tr1.cells[0].innerHTML);
+			return n1-n2;
+		});
+		for (var i=0;i<arr.length;i++）
+		 {
+		 	oTab.tBodies[0].appendChild(arr[i]);
+			};
+		};
+	   };
+	   
+	   
+	   
+	   
+	   表单操作
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>表单操作</title>
+<script>
+	window.onload = function()
+	{
+		var form1 = document.getElementById('form1');
+		form1.onsubmit = function()
+		{
+			alert("onsubmit");
+		}
+		
+		form1.onreset = function()
+		{
+			alert("onrest");
+		}
+	}
+</script>
+
+</head>
+
+<body>
+	<form id = "form1"action="http://www.baidu.com">
+		用户名:<input type = "text" name = "user" /><br />
+		密码：<input type = "password" name = "password"/>
+		<input type = "submit"/>
+		<input type = "reset"/>
+	</form>
 </body>
 </html>
