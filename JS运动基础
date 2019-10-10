@@ -50,3 +50,154 @@
 <div id="div1"></div>
 </body>
 </html>
+
+
+
+
+案例
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分享到</title>
+    <style>
+    #div1{
+        width: 150px;
+        height: 200px;
+        background: green;
+        position: absolute;
+        left: -150px;
+    }
+    #div1 span{
+        position: absolute;
+        width: 20px;
+        height: 60px;
+        line-height: 20px;
+        background: blue;
+        right: -20px;
+        top: 70px;
+    }
+    </style>
+    <script>
+    window.onload=function()
+    {
+        var oDiv=document.getElementById('div1');
+        oDiv.onmouseover=function()
+        {
+            startMove(0);
+        };
+        oDiv.onmouseout=function()
+        {
+            startMove(-150);
+        };
+
+    };
+    var timer=null;
+    function startMove(iTarget)   //运动框架
+    {
+        var oDiv=document.getElementById('div1');
+        clearInterval(timer);
+        timer=setInterval(function(){
+            var speed=0;
+            if(oDiv.offsetLeft>iTarget)
+            {
+                speed=-10;   //当前位置大于目标地点 速度为负 向右走
+            }
+            else
+            {
+                speed=10;   //当前位置小于目标地点 速度为正 向左走
+            }
+            if(oDiv.offsetLeft==iTarget)
+            {
+                clearInterval(timer);
+            }
+            else
+            {
+                oDiv.style.left=oDiv.offsetLeft+speed+'px';
+            }
+        },30)
+    }
+
+
+    
+    </script>  
+</head>
+<body>
+    <div id="div1">
+        <span>分享到</span>
+    </div>
+</body>
+</html>
+
+
+
+淡入淡出案例
+知识点：用变量表示物体的样式
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    #div1{
+        width: 200px;
+        height: 200px;
+        background: yellow;
+        filter: alpha(opacity=30);
+        opacity: 0.3; 
+    }
+    </style>
+    <script>
+    window.onload=function()
+    {
+        var oDiv=document.getElementById('div1');
+        oDiv.onmouseover=function()
+        {
+            startMove(100);
+        }
+        oDiv.onmouseout=function()
+        {
+            startMove(30);
+        }
+    }
+    var alpha=30;
+    var timer=null;
+    function startMove(iTarget)
+    {   
+        var oDiv=document.getElementById('div1');
+        clearInterval(timer);
+        timer=setInterval(function(){
+            var speed=0;
+            if(alpha<iTarget)
+            {
+                speed=10;
+            }
+            else
+            {
+                speed=-10;
+            }
+            if(alpha==iTarget)
+            {
+                clearInterval(timer);
+            }
+            else
+            {
+                alpha+=speed;
+                oDiv.style.filter='alpha(opacity='+alpha+')';
+                oDiv.style.opacity=alpha/100;
+            }
+        },30);
+    }
+    </script>
+</head>
+<body>
+<div id="div1">
+
+</div>
+</body>
+</html>
