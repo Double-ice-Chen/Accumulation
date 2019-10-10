@@ -103,11 +103,11 @@
             var speed=0;
             if(oDiv.offsetLeft>iTarget)
             {
-                speed=-10;   //当前位置大于目标地点 速度为负 向右走
+                speed=-10;   //当前位置大于目标地点 速度为负 向左走
             }
             else
             {
-                speed=10;   //当前位置小于目标地点 速度为正 向左走
+                speed=10;   //当前位置小于目标地点 速度为正 向右走
             }
             if(oDiv.offsetLeft==iTarget)
             {
@@ -116,6 +116,7 @@
             else
             {
                 oDiv.style.left=oDiv.offsetLeft+speed+'px';
+                //offsetLeft是当前位置  当前位置不等于0的时候要往右走 赋值给left
             }
         },30)
     }
@@ -134,7 +135,7 @@
 
 
 淡入淡出案例
-知识点：用变量表示物体的样式
+知识点：用变量表示物体的样式  
 
 <!DOCTYPE html>
 <html lang="en">
@@ -165,7 +166,7 @@
             startMove(30);
         }
     }
-    var alpha=30;
+    var alpha=30;  无法取物体的透明度 因此定义一个变量 后续变的是alpha这个变量而不是透明度
     var timer=null;
     function startMove(iTarget)
     {   
@@ -187,8 +188,8 @@
             }
             else
             {
-                alpha+=speed;
-                oDiv.style.filter='alpha(opacity='+alpha+')';
+                alpha+=speed;   到目前为止变的还是alpha
+                oDiv.style.filter='alpha(opacity='+alpha+')';    //把alpha赋给透明度
                 oDiv.style.opacity=alpha/100;
             }
         },30);
