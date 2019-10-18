@@ -30,7 +30,9 @@ https://github.com/Double-ice-Chen/Accumulation/blob/master/135534546874179883.j
 
 https://github.com/Double-ice-Chen/Accumulation/blob/master/65461298071680330.jpg
 
+当一个函数在另一个函数内定义，内部的函数能够访问外部函数的变量。我们称之为词法作用域。
 
+然而，外部的函数不能够访问内部函数的变量
 
 
 闭包
