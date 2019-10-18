@@ -1,7 +1,87 @@
+作用域
+
+JavaScript 作用域指定了哪些变量你能够访问。有两种作用域 —— 全局作用域和局部作用域
+
+全局作用域
+
+如果一个变量在函数外面或者大括号（{}）外申明，那么就是定义了一个全局作用域的变量。
+
+一旦你申明了全局变量，那么你可以在任何地方使用它，甚至在函数中也行。局部作用域
+
+在你代码特定范围之内申明的变量可以称为处于局部作用域中，这些变量也被称为局部作用域。
+
+在 JavaScript 中，有两种局部作用于：函数作用域和块作用域。
+
+
+函数作用域
+
+当你在函数中申明一个变量，你就只能够在这个函数范围内使用它。在范围之外你不能使用。
+
+块作用域
+
+当你在一个大括号中（{}）使用 const 或者 let 申明变量，那么这个变量只能够在这个大括号范围内使用。
+
 嵌套作用域
+这个图片介绍了它是如何工作的，你能够想象一面单面镜。你能够看见外面的人，外面的人却无法看见你。
+
 https://github.com/Double-ice-Chen/Accumulation/blob/master/135534546874179883.jpg
 
+如果你遇见了嵌套作用域，可以理解成多层单面玻璃。
+
+https://github.com/Double-ice-Chen/Accumulation/blob/master/65461298071680330.jpg
 
 
+
+
+闭包
 
 JS中有一个作用域的概念，就是函数内和函数外，函数内部可以使用函数外部定义的变量。但是函数外部不可以直接使用函数内部的变量。当一个函数内部访问到了外部作用域的变量时。这个函数和里面使用的这个变量的统称，叫做闭包。 
+
+
+当你在一个函数内部创建一个函数时，你就创建了一个闭包。内部函数就是闭包。这个闭包总是会 return 出来，所以你能够稍后使用外部函数中的变量
+
+function outerFunction () {
+  const outer = `I see the outer variable!`
+
+  function innerFunction() {
+    console.log(outer)
+  }
+
+  return innerFunction
+}
+
+outerFunction() // I see the outer variable!
+当内部函数需要 return 时，你可以直接 reutrn 函数声明，这样的代码更加的精练。
+function outerFunction () {
+  const outer = `I see the outer variable!`
+
+  return function innerFunction() {
+    console.log(outer)
+  }
+}
+
+outerFunction()() // I see the outer variable!
+
+举一个例子
+
+function makeFunc() {
+    var name = "Mozilla";
+    function displayName() {
+        alert(name);
+    }
+    return displayName;
+}
+var myFunc = makeFunc();  //执行结果是displayName这个函数  他的类型是函数本体打印出来看看
+myFunc();//调用函数 这个时候出来才是mozila
+
+
+
+console.log(myFunc);  //函数本体  function displayName() {
+                                       //  alert(name);
+                                                     //  }
+console.log(makeFunc());
+
+因为闭包允许变量来自外部的函数，他们通常被用来：
+
+1.解决副作用
+2.创建私有变量
