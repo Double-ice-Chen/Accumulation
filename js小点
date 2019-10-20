@@ -1,0 +1,2 @@
+当js代码需要获取页面中的元素时，如果script标签在元素的前面，需要加window.onload；
+如果script放在了元素后面，就不需要加 window.onload。 
