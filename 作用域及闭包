@@ -87,3 +87,38 @@ console.log(makeFunc());
 
 1.解决副作用
 2.创建私有变量
+
+
+
+
+再次理解
+
+      函数a返回函数b时，如果函数b引用了函数a的局部变量，
+实际的返回值就变成了函数b的函数体加一个闭包，闭包里是函数b用到的全部变量。
+    <script>
+     function createCounter()//函数a
+     {  let counter = 0
+    
+    const myFunction = function() {//函数b
+    
+        counter = counter + 1//引用了函数a的局部变量
+        
+         return counter
+        
+        }
+    
+          return myFunction//  返回值变成 函数b的函数体加一个闭包
+    
+    }
+    
+     const increment = createCounter()
+        
+     const c1 = increment()
+        
+         const c2 = increment()
+        
+         const c3 = increment()
+        
+         console.log(createCounter(),increment, c1, c2, c3)
+    </script>
+
